@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+    <head>
+
+    </head>
+    <body>
+        <p id="demo"></p>
+        <p id="demo1"></p>
+        <script>
+            const cars =["Saab", "Volvo", "BMW", "Audi", "Mercedes", "Opel"];
+            let text  = "";
+            let text1 = "";
+
+            for(let i=0; i<cars.length;i++){
+                text +=cars[i] + "<br>";
+                text1+="This number  is "+ i+"<br>";
+
+            }
+            document.getElementById("demo").innerHTML = text;
+            document.getElementById("demo1").innerHTML = text1;
+        </script>
+        
+    </body>
+</html>

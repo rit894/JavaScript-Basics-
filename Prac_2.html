@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+    <head>
+
+    </head>
+    <body>
+        <p id="demo"> This is the original para dude </p>
+        <input id="age" value="18">
+        <button onclick="myFunction()">Click Me</button>
+        <script>
+            let x= 5;
+            const fname ='jon';
+
+            
+            function myFunction(){
+                let votable;
+                let age = document.getElementById("age").value;
+                if(isNaN(age)){
+                    votable = "Input is not a number";
+                }
+                else{
+                    votable = (age < 18) ? "Too young":"Old enough";
+                }
+                document.getElementById("demo").innerHTML = votable;
+            }
+        </script>
+    </body>
+</html>
