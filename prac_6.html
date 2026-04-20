@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>My Page</title>
+    </head>
+    <body>
+        <p id="d1"></p>
+        <p id = "d2"></p>
+        <p id = "d3"></p>
+        <p id = "d4"></p>
+
+        <script>
+            // rounding methond
+            let num =42.2225653;
+            let num2="42.222j5653";
+            document.getElementById("d1").innerHTML = "round:" + num.toPrecision(4);
+            document.getElementById("d2").innerHTML = parseFloat(num);
+            document.getElementById("d3").innerHTML = parseInt(num);
+            
+            if(isNaN(num)){
+                console.log("Not a Number");
+            }else {
+                console.log("TRUE");
+            }
+            document.getElementById("d4").innerHTML =Number(num2);
+            let num3 = Number(num2);
+            console.log(isNaN(num2));
+
+        </script>
+    </body>
+</html>
+
+<!-- 1. Converting to Strings
+Use these methods when you need to turn a number into text (e.g., for display).
+toString(): Returns a number as a string. You can use it to convert to other bases (like binary) by adding a radix: num.toString(2).
+toFixed(x): Returns a string with the number rounded to x decimal places. (Essential for money).
+toPrecision(x): Returns a string with the number written to a specified total length.
+toExponential(x): Returns a string with the number written in exponential notation.
+2. Converting to Numbers (Global Methods)
+These are used to extract numbers from variables or strings.
+Number(): Converts the entire value. Returns NaN if any part of the string is non-numeric.
+parseFloat(): Parses a string and returns a floating-point (decimal) number. It is more lenient and ignores trailing text (e.g., "10.5px" → 10.5).
+parseInt(): Parses a string and returns a whole number (integer). It chops off everything after the decimal.
+3. Static Number Methods (Checkers)
+These must be called using the Number prefix (e.g., Number.isInteger(x)).
+Number.isInteger(): Checks if a value is a whole number.
+Number.isSafeInteger(): Checks if the number is within the safe range for precision.
+Number.isNaN(): Checks if the value is NaN. This is the most reliable way to check for "Not a Number."
+Number.isFinite(): Checks if the value is a finite number (not Infinity or NaN).
+4. Key Takeaways
+Note on Modularization: The methods Number.parseInt() and Number.parseFloat() are identical to the global parseInt() and parseFloat(). They were added to the Number object to make the language cleaner and more organized.
+Static vs. Instance: You can't use static methods (like isInteger) on a variable directly.
+✅ Number.isInteger(x)
+❌ x.isInteger() -->
+
