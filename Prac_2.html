@@ -1,28 +1,115 @@
 <!DOCTYPE html>
-<html>
-    <head>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resource Management Guru (RMG)</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <div class="logo">RMG</div>
+    <nav>
+      <ul>
+        <li><a href="#about">About Us</a></li>
+        <li><a href="#tools">Our Tools</a></li>
+      </ul>
+    </nav>
+  </header>
 
-    </head>
-    <body>
-        <p id="demo"> This is the original para dude </p>
-        <input id="age" value="18">
-        <button onclick="myFunction()">Click Me</button>
-        <script>
-            let x= 5;
-            const fname ='jon';
+  <!-- Hero Section -->
+  <section class="hero">
+    <h1>Welcome to Resource Management Guru</h1>
+    <p>Empowering smarter resource management with elegance, sustainability, and innovation.</p>
+  </section>
 
-            
-            function myFunction(){
-                let votable;
-                let age = document.getElementById("age").value;
-                if(isNaN(age)){
-                    votable = "Input is not a number";
-                }
-                else{
-                    votable = (age < 18) ? "Too young":"Old enough";
-                }
-                document.getElementById("demo").innerHTML = votable;
-            }
-        </script>
-    </body>
+  <!-- About Us -->
+  <section id="about" class="content">
+    <h2>About Us</h2>
+    <p>
+      Resource Management Guru (RMG) is a premium destination for resource optimization. 
+      We provide curated insights, luxury-grade tools, and strategies to help households, industries, 
+      and organizations thrive sustainably. Our mission is to empower individuals and businesses to 
+      embrace efficiency with sophistication.
+    </p>
+    <p>
+      Partnering with global experts, RMG delivers cutting-edge solutions blending technology, 
+      sustainability, and elegance. From AI-driven automation to practical household innovations, 
+      we redefine resource management for a modern world.
+    </p>
+    <h3>Featured Articles</h3>
+    <ul>
+      <li><a href="attachments/article1.pdf" download>6 Compelling Reasons to Rethink Spreadsheets for Project Resource Planning (2024)</a></li>
+      <li><a href="attachments/article2.pdf" download>What is Project Resource Management: Benefits & Best Practices (2024)</a></li>
+      <li><a href="attachments/article3.pdf" download>Resource Capacity Planning: 2026 Guide</a></li>
+      <li><a href="attachments/article4.pdf" download>Resource & Project Management Glossary (2026)</a></li>
+      <li><a href="attachments/article5.pdf" download>Resource Guru Software In-Depth Review (2026)</a></li>
+    </ul>
+  </section>
+
+  <!-- Our Tools -->
+  <section id="tools" class="content">
+    <h2>Our Tools</h2>
+    <p>Explore our categories designed to simplify resource management:</p>
+    <ul class="categories">
+      <li><strong>Household Category:</strong> Tools for everyday resource optimization at home.</li>
+      <li><strong>Hardware Industry:</strong> Solutions for manufacturing and industrial efficiency.</li>
+      <li><strong>Software Industry:</strong> Digital tools for smarter workflows.</li>
+      <li><strong>Other:</strong> Miscellaneous tools for diverse needs.</li>
+    </ul>
+  </section>
+
+  <!-- Importance of Resource Management -->
+  <section class="content">
+    <h2>Why Resource Management Matters</h2>
+    <p>
+      Resource management is the cornerstone of sustainable luxury. It ensures that 
+      energy, water, raw materials, and human talent are used wisely to meet today’s needs 
+      while preserving tomorrow’s opportunities.
+    </p>
+    <ul>
+      <li><strong>Sustainability:</strong> Protecting the planet while maintaining elegance in living.</li>
+      <li><strong>Economic Stability:</strong> Efficient allocation reduces costs and supports long-term prosperity.</li>
+      <li><strong>Social Equity:</strong> Ensuring fair access to resources across communities.</li>
+      <li><strong>Climate Action:</strong> Reducing waste and emissions for a cleaner, greener world.</li>
+      <li><strong>Innovation:</strong> Driving adoption of advanced technologies and smarter workflows.</li>
+    </ul>
+    <p>
+      In a world facing climate change and resource scarcity, resource management is not just 
+      practical—it is a lifestyle of responsibility, elegance, and foresight.
+    </p>
+  </section>
+
+  <!-- Recommended Reads -->
+  <section class="content">
+    <h2>Recommended Reads</h2>
+    <ul>
+      <li><a href="#">Journal of Sustainable Resource Management</a></li>
+      <li><a href="#">Article: The Future of Resource Optimization</a></li>
+      <li><a href="#">Case Study: RMS in Modern Industries</a></li>
+    </ul>
+  </section>
+
+  <!-- Extra Feature -->
+  <section class="newsletter">
+    <h2>Stay Updated</h2>
+    <p>Subscribe to our newsletter for the latest insights on resource management.</p>
+    <form>
+      <input type="email" placeholder="Enter your email" required>
+      <button type="submit">Subscribe</button>
+    </form>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-logo">RMG</div>
+    <p>&copy; 2026 Resource Management Guru. All rights reserved.</p>
+    <nav>
+      <a href="#">Privacy Policy</a> | 
+      <a href="#">Cookies</a> | 
+      <a href="#">Copyright</a>
+    </nav>
+  </footer>
+</body>
 </html>

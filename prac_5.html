@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>My Page</title>
+    </head>
+    <body>
+        <h1> JavaScript Template Strings </h1>
+        <p > Formatting Strings in JavaScript </p>
+        <p id="demo"></p>
+        <p id="demo1"></p>
+        <p id="demo2"></p>
+        <p id="demo3"></p>
+        <p id="demo4"></p>
+        <p id="demo5"></p>
+        <p id="demo6"></p>
+        <p id="demo7"></p>
+
+        <script>
+
+            let fname = "Rithwik";
+            let sname = "vallala";
+            let tname =" Vallala Naga Rithwik"
+            let position = "    hybrid  (data scientist & Ai/Ml Engineer)    ";
+            let text  = `My name is ${fname} ${sname} & iam 17 years old.`;
+            document.getElementById("demo").innerHTML = text;
+            document.getElementById("demo1").innerHTML = fname.charAt(0) + " " + sname.charAt(0);
+            document.getElementById("demo2").innerHTML = fname.concat(";", sname);
+            document.getElementById("demo3").innerHTML = tname.slice(0,5);
+            document.getElementById("demo4").innerHTML = tname.toUpperCase();
+            document.getElementById("demo5").innerHTML = tname.toLowerCase();
+            document.getElementById("demo6").innerHTML = position.trim();
+            document.getElementById("demo7").innerHTML = position.trimEnd();
+        </script>
+    </body>
+</html>

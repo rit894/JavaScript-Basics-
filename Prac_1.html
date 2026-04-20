@@ -1,25 +1,477 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <script>
-            function myfunction(){
-                document.getElementById("demo").innerHTML = 'Hello boy the paragraph is changed';
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Resource Management Dashboard</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-            }
-        </script>
+  <style>
+    /* ------------------------------
+       GLOBAL GLASS MORPHISM THEME
+    ------------------------------ */
+    :root {
+      --glass-bg: rgba(255, 255, 255, 0.25);
+      --glass-border: rgba(255, 255, 255, 0.35);
+      --glass-blur: blur(15px);
 
-    </head>
-    <body>
-        <h2> JavaScript In the body </h2>
-        <p id="demo"> This isthe original para dude </p>
-        <button type="button" onclick="myfunction()">Click Me</button>
-        <script>
-            alert("This is an alert box");
-            console.log(5+6);
-        </script>
-        <button onclick="window.print()">Print this page</button>
+      --accent: #00a8ff;
+      --accent-glow: 0 0 20px rgba(0, 168, 255, 0.6);
 
-        
-        
-    </body>
+      --text-dark: #1e272e;
+      --text-light: #ffffff;
+
+      --gradient-bg: linear-gradient(135deg, #1e90ff, #00d2d3, #6c5ce7);
+    }
+
+    body {
+      margin: 0;
+      font-family: "Segoe UI", sans-serif;
+      background: var(--gradient-bg);
+      background-size: 300% 300%;
+      animation: gradientShift 12s ease infinite;
+      color: var(--text-dark);
+    }
+
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    header {
+      text-align: center;
+      padding: 1.5rem;
+      color: white;
+      font-size: 2rem;
+      font-weight: bold;
+      text-shadow: 0 0 10px rgba(255,255,255,0.5);
+    }
+
+    /* ------------------------------
+       GLASS CARDS
+    ------------------------------ */
+    .card {
+      background: var(--glass-bg);
+      backdrop-filter: var(--glass-blur);
+      border: 1px solid var(--glass-border);
+      border-radius: 15px;
+      padding: 1.5rem;
+      text-align: center;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      color: white;
+    }
+
+    .card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 12px 35px rgba(0,0,0,0.25);
+    }
+
+    .categories {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+      padding: 2rem;
+    }
+
+    .view-btn {
+      margin-top: 1rem;
+      padding: 0.7rem 1.2rem;
+      border: none;
+      border-radius: 8px;
+      background: var(--accent);
+      color: white;
+      cursor: pointer;
+      font-weight: bold;
+      box-shadow: var(--accent-glow);
+      transition: 0.2s;
+    }
+
+    .view-btn:hover {
+      transform: scale(1.05);
+    }
+
+    /* ------------------------------
+       FORM SECTION
+    ------------------------------ */
+    .form-section {
+      padding: 2rem;
+      text-align: center;
+      color: white;
+    }
+
+    #industryTitle {
+      margin-bottom: 1rem;
+      text-shadow: 0 0 8px rgba(0,0,0,0.4);
+    }
+
+    input {
+      padding: 0.7rem;
+      margin: 0.5rem;
+      border-radius: 10px;
+      border: 1px solid rgba(255,255,255,0.4);
+      background: rgba(255,255,255,0.2);
+      backdrop-filter: blur(10px);
+      color: white;
+      width: 200px;
+    }
+
+    input::placeholder {
+      color: #f1f1f1;
+    }
+
+    button {
+      padding: 0.7rem 1.2rem;
+      border-radius: 10px;
+      border: none;
+      background: var(--accent);
+      color: white;
+      cursor: pointer;
+      font-weight: bold;
+      box-shadow: var(--accent-glow);
+    }
+
+    button:hover {
+      transform: translateY(-1px);
+    }
+
+    /* ------------------------------
+       TABLE (Glass)
+    ------------------------------ */
+    table {
+      width: 90%;
+      margin: 1rem auto;
+      border-collapse: collapse;
+      background: var(--glass-bg);
+      backdrop-filter: blur(12px);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    th, td {
+      padding: 12px;
+      border-bottom: 1px solid rgba(255,255,255,0.2);
+      color: white;
+      text-align: center;
+    }
+
+    th {
+      background: rgba(255,255,255,0.15);
+    }
+
+    /* ------------------------------
+       TABS
+    ------------------------------ */
+    .tab-container {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+
+    .tab-btn {
+      padding: 10px 20px;
+      border-radius: 10px;
+      background: rgba(255,255,255,0.25);
+      border: 1px solid rgba(255,255,255,0.4);
+      color: white;
+      cursor: pointer;
+      font-weight: bold;
+      backdrop-filter: blur(10px);
+      transition: 0.2s;
+    }
+
+    .tab-btn.active {
+      background: var(--accent);
+      box-shadow: var(--accent-glow);
+    }
+
+    /* ------------------------------
+       CHART BOXES
+    ------------------------------ */
+    .chart-box, .full-chart-box {
+      background: var(--glass-bg);
+      backdrop-filter: var(--glass-blur);
+      border: 1px solid var(--glass-border);
+      border-radius: 15px;
+      padding: 20px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+      color: white;
+    }
+
+    .chart-row {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+
+    .chart-box {
+      flex: 1 1 45%;
+      max-width: 45%;
+      min-width: 280px;
+    }
+
+    .full-chart-box {
+      width: 90%;
+      margin: 20px auto;
+    }
+
+    #gapCategorySelect {
+      padding: 8px;
+      border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.4);
+      background: rgba(255,255,255,0.2);
+      color: white;
+      backdrop-filter: blur(10px);
+      margin-bottom: 10px;
+    }
+
+    .hidden { display: none; }
+  </style>
+</head>
+
+<body>
+<header>
+  <h1>Resource Management Dashboard</h1>
+</header>
+
+<!-- Landing Page -->
+<section id="landing" class="categories">
+  <div class="card">
+    <h2>Household</h2>
+    <p>Track utilities, groceries, and home resources.</p>
+    <button class="view-btn" onclick="selectIndustry('Household')">Select</button>
+  </div>
+  <div class="card">
+    <h2>Software Industry</h2>
+    <p>Monitor licenses, cloud usage, and developers’ tools.</p>
+    <button class="view-btn" onclick="selectIndustry('Software')">Select</button>
+  </div>
+  <div class="card">
+    <h2>Hardware Industry</h2>
+    <p>Analyze inventory, machinery, and spare parts usage.</p>
+    <button class="view-btn" onclick="selectIndustry('Hardware')">Select</button>
+  </div>
+  <div class="card">
+    <h2>Other</h2>
+    <p>Miscellaneous resources from external or shared categories.</p>
+    <button class="view-btn" onclick="selectIndustry('Other')">Select</button>
+  </div>
+</section>
+
+<!-- Resource Page -->
+<section id="resourcePage" class="hidden form-section">
+  <h2 id="industryTitle"></h2>
+
+  <input id="name" placeholder="Resource Name">
+  <input id="category" placeholder="Category">
+  <input id="availableQty" type="number" placeholder="Available Quantity">
+  <input id="allocatedQty" type="number" placeholder="Allocated Quantity">
+  <input id="targetQty" type="number" placeholder="Target Quantity">
+
+  <button onclick="addResource()">Add Resource</button>
+
+  <h3>Resource Directory</h3>
+  <table id="resourceTable">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Category</th>
+        <th>Details</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <!-- Side-by-side charts -->
+  <div class="chart-row">
+    <div class="chart-box">
+      <h3>Category Contribution</h3>
+      <canvas id="categoryPieChart"></canvas>
+    </div>
+
+    <div class="chart-box">
+      <h3>Gap Analysis</h3>
+      <select id="gapCategorySelect" onchange="updateGapChart(this.value)"></select>
+      <canvas id="gapChart"></canvas>
+    </div>
+  </div>
+
+  <!-- Tabs -->
+  <h3>Category-wise Item Analysis</h3>
+  <div id="tabButtons" class="tab-container"></div>
+
+  <!-- Grouped Bar Chart -->
+  <div class="full-chart-box">
+    <canvas id="resourceChart"></canvas>
+  </div>
+
+  <button onclick="goHome()">Back to Home</button>
+</section>
+
+<script>
+let industry = "";
+let resources = [];
+let chart, gapChart, categoryPie;
+let idCounter = 1;
+
+function selectIndustry(selected) {
+  industry = selected;
+  document.getElementById("landing").classList.add("hidden");
+  document.getElementById("resourcePage").classList.remove("hidden");
+  document.getElementById("industryTitle").textContent = industry + " Resources";
+  initCharts();
+}
+
+function goHome() {
+  document.getElementById("resourcePage").classList.add("hidden");
+  document.getElementById("landing").classList.remove("hidden");
+  resources = [];
+  idCounter = 1;
+  if (chart) chart.destroy();
+  if (gapChart) gapChart.destroy();
+  if (categoryPie) categoryPie.destroy();
+}
+
+function addResource() {
+  const name = document.getElementById("name").value;
+  const category = document.getElementById("category").value;
+  const available = parseInt(document.getElementById("availableQty").value);
+  const allocated = parseInt(document.getElementById("allocatedQty").value);
+  const target = parseInt(document.getElementById("targetQty").value);
+
+  if (!name || !category || isNaN(available) || isNaN(allocated) || isNaN(target)) {
+    alert("Please fill in all fields!");
+    return;
+  }
+
+  resources.push({ id: idCounter++, name, category, available, allocated, target });
+
+  renderTable();
+  generateTabs();
+  updateCategoryPie();
+  updateGapDropdown();
+  updateAllForCategory(category);
+}
+
+function renderTable() {
+  const tbody = document.querySelector("#resourceTable tbody");
+  tbody.innerHTML = resources.map(r => `
+    <tr>
+      <td>${r.id}</td>
+      <td>${r.name}</td>
+      <td>${r.category}</td>
+      <td>Available: ${r.available}, Allocated: ${r.allocated}, Target: ${r.target}</td>
+    </tr>`).join("");
+}
+
+function initCharts() {
+  chart = new Chart(document.getElementById("resourceChart"), {
+    type: "bar",
+    data: { labels: [], datasets: [] },
+    options: { responsive: true, scales: { y: { beginAtZero: true } } }
+  });
+
+  gapChart = new Chart(document.getElementById("gapChart"), {
+    type: "bar",
+    data: { labels: [], datasets: [] },
+    options: { responsive: true, scales: { y: { beginAtZero: true } } }
+  });
+
+  categoryPie = new Chart(document.getElementById("categoryPieChart"), {
+    type: "pie",
+    data: { labels: [], datasets: [] },
+    options: { responsive: true }
+  });
+}
+
+function generateTabs() {
+  const tabContainer = document.getElementById("tabButtons");
+  tabContainer.innerHTML = "";
+
+  const categories = [...new Set(resources.map(r => r.category))];
+
+  categories.forEach((cat, index) => {
+    const btn = document.createElement("button");
+    btn.className = "tab-btn" + (index === 0 ? " active" : "");
+    btn.textContent = cat;
+    btn.onclick = () => switchTab(cat, btn);
+    tabContainer.appendChild(btn);
+  });
+
+  updateGapDropdown();
+
+  if (categories.length > 0) updateAllForCategory(categories[0]);
+}
+
+function updateGapDropdown() {
+  const categories = [...new Set(resources.map(r => r.category))];
+  const gapSelect = document.getElementById("gapCategorySelect");
+
+  gapSelect.innerHTML = "";
+  categories.forEach(cat => {
+    const opt = document.createElement("option");
+    opt.value = cat;
+    opt.textContent = cat;
+    gapSelect.appendChild(opt);
+  });
+}
+
+function switchTab(category, btn) {
+  document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+  btn.classList.add("active");
+  updateAllForCategory(category);
+}
+
+function updateAllForCategory(category) {
+  updateGroupedBar(category);
+  const currentGapCat = document.getElementById("gapCategorySelect").value || category;
+  updateGapChart(currentGapCat);
+}
+
+function updateGroupedBar(category) {
+  const items = resources.filter(r => r.category === category);
+
+  chart.data.labels = items.map(i => i.name);
+  chart.data.datasets = [
+    { label: "Available", data: items.map(i => i.available), backgroundColor: "rgba(0,200,0,0.7)" },
+    { label: "Allocated", data: items.map(i => i.allocated), backgroundColor: "rgba(255,165,0,0.7)" },
+    { label: "Target", data: items.map(i => i.target), backgroundColor: "rgba(255,0,0,0.7)" }
+  ];
+  chart.update();
+}
+
+function updateGapChart(category) {
+  const items = resources.filter(r => r.category === category);
+
+  gapChart.data.labels = items.map(i => i.name);
+  gapChart.data.datasets = [
+    {
+      label: "Gap (Target - Available)",
+      data: items.map(i => i.target - i.available),
+      backgroundColor: "rgba(52,152,219,0.8)"
+    }
+  ];
+  gapChart.update();
+}
+
+function updateCategoryPie() {
+  const totals = {};
+  resources.forEach(r => totals[r.category] = (totals[r.category] || 0) + r.available);
+
+  categoryPie.data.labels = Object.keys(totals);
+  categoryPie.data.datasets = [{
+    data: Object.values(totals),
+    backgroundColor: ["#00b894", "#0984e3", "#6c5ce7", "#e17055", "#fdcb6e"]
+  }];
+  categoryPie.update();
+}
+</script>
+
+</body>
 </html>
