@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>jkjljn</title>
+    </head>
+    <body>
+      <h1> JAVASCRIPT TIMING  EVENTS </h1>
+
+      <button id="mybtn">Click me</button>
+        <p id="demo"></p><br>
+        <button id="Start">Start Count</button>
+        <button id="Stop">Stop </button>
+        <p id="demo1"></p>
+        <script>
+            setInterval(showTime,1000);
+            function showTime(){
+                date = new Date();
+                document.getElementById("demo").innerHTML =
+                date.getHours() + ":" + date.getMinutes() + ":"  + date.getSeconds();
+
+            }
+            document.getElementById("mybtn").addEventListener("click",function(){
+                setTimeout(ShowMSG,2000 );
+            })
+            function ShowMSG(){
+                alert("Hello World");
+            }
+
+            // using SetInterVal() along with ClearInterVal() method
+            let count =1000.00;
+            let myinterval ;
+
+            document.getElementById("Start").addEventListener("click",function(){
+                 myinterval = setInterval(showMsg,1000);
+            });
+            document.getElementById("Stop").addEventListener("click",function(){
+                clearInterval(myinterval);
+
+            });
+            function showMsg(){
+                count--;
+                document.getElementById("demo1").innerHTML = count;
+            };
+
+
+        </script>
+
+        
+    </body>
+</html>

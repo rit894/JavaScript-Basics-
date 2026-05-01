@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>jkjljn</title>
+    </head>
+    <body>
+  
+        <h1> Practice (Form ValiDations) </h1>
+
+        <input type="text" id="same" placeholder="Name">
+
+        <input type="text" id="email" placeholder="Email">
+
+        <input type="radio" id="game" name="r1" value="html">
+        <label for="game">HTML</label>
+
+        <input type="radio" id="game1" name="r1" vlue="css">
+        <label for="game1">CSS</label>
+
+        
+        <input type="radio" id="game2" name="r1" value="Javascript">
+        <label for="game2">JavaScript</label>
+
+        <input type="checkbox" name="course" value="1" id="1">HTML
+        <input type="checkbox" name="course" value="2" id="2">CSS
+        <input type="checkbox" name="course" value="3" id="3">JavaScript
+
+        <select id="select" name="select">
+            <option value="car1">Car1</option>
+            <option value="car2">Car2</option>
+            <option value="car3">Car3</option>
+            <option value="car4">Car4</option>
+        </select>
+
+        <button id="Id">CLick me to validate</button>
+
+
+        <script>
+            function validateForm(){
+            if(document.getElementById("same").value === null || document.getElementById("same").value === "" ){
+                alert("Name feild is empty !!");
+
+            }
+            if( document.getElementById("same").value.length !== 10){
+                alert("Required Format of 10 Letters is Not Achieved ");
+            }
+
+            let EmailPattern =/^[a-zA-Z0-9._]+@[a-zA-Z0-9]+\.[a-z]{2,4}$/;
+            if(!document.getElementById("email").value.match(EmailPattern)){
+                alert("ERROR : Unrecognised Email Pattern ");
+            }
+
+            if(!document.querySelector('input[name="r1"]:checked')){
+                alert("Choose the course.");
+            }
+            if(!document.querySelector('input[name="course"]:checked')){
+                alert("COURSE CHECK BOX IS NOT FILLED ??");
+            }
+
+            if(document.getElementById("select").value ===""){
+                alert("Check the Drop Down Menu PLz!!");
+            }
+
+        }
+
+        let id = document.getElementById("Id");
+
+        id.addEventListener("click",validateForm);
+
+
+
+
+
+        </script>
+
+
+        
+    </body>
