@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+    </head>
+    <body>
+        <h1> KeyBoard Events Examples : </h1>
+        <p id="demo1"></p>
+        <input type="text" id="demo" placeholder="Press a Key">
+
+        <script>
+            let k = document.getElementById("demo");
+            k.addEventListener("keydown",function(event){
+                
+                document.getElementById("demo1").innerHTML = 
+                "You Pressed : "+event.key;
+
+            });
+
+            k.addEventListener("keydown",function(event){
+                if(event.code === "Enter"){
+                document.getElementById("demo1").innerHTML =
+                "YOu have hit ENter"; 
+                };
+            })
+        </script>
+
+    </body>
+</html>
