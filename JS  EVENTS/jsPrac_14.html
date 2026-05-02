@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            form{
+                background-color: whitesmoke;
+                border-radius: 15px;
+                max-width: 75%;
+                margin: 0 auto;
+                box-shadow: 4px 10px 10px black;
+            }
+            .error{
+                color: red;
+                font-size: smaller;
+            }
+        </style>
+
+    </head>
+    <body>
+        <form>
+            Patient Name : <input type="text" id="name"> 
+            <div class="error" id="nameError"></div><br>
+
+             Age : <input type="text" id="age"> 
+            <div class="error" id="ageError"></div><br>
+
+             Email : <input type="text" id="Email"> 
+            <div class="error" id="emailError"></div><br>
+
+             Contact : <input type="text" id="phno"> 
+            <div class="error" id="phnoeError"></div><br>
+
+            chooose Your Gender : <br>
+            <input type="radio" name="Gender" value="male">Male
+            <input type="radio" name="Gender" value="Female">FeMale
+            <input type="radio" name="Gender" value="not to say">prefer not to say
+
+            <div class="error" id="GenderError"></div><br>
+
+            Select your Depart Ment : <select id="dept">
+                <option value="Cardio">Cardio</option>
+                <option value="orthopedics">OrthoPedics</option>
+                <option value="Neurology">Neurology</option>
+            </select>
+            <div class="error" id="deptError">
+
+            </div>
+
+            Appojnment Date : <input type="Date" id="dt">
+            <div class="error" id="dtError"></div> <br>
+
+            chooose Your Appointment Slot : <br>
+            <input type="radio" name="slot" value="9 to 12">9 to 12
+            <input type="radio" name="slot" value="12 to 3">2 to 3
+            <input type="radio" name="slot" value="3 to 6">3 to 6
+
+            <div class="error" id="SlotError"></div>
+
+            <textarea id="comments" placeholder="Enter youe symtomps here ,"></textarea>
+            <div class="error" id="commentError"></div>
+
+            <button id="submit">Submit</button>
+            <button type="reset">Reset</button>
+
+            <script>
+
+     mybtn.addEventListener("click", function(e) {
+    e.preventDefault();
+
+    // Name validation
+    if(name.value === "" || name.value.length < 2){
+        document.getElementById("nameError").innerText = "Fill this field properly";
+    } else {
+        document.getElementById("nameError").innerText = "";
+    }
+
+    // Contact validation
+    if(contact.value.length !== 10 || contact.value[0] === "0"){
+        document.getElementById("phnoeError").innerText = "Fill this field properly";
+    } else {
+        document.getElementById("phnoeError").innerText = "";
+    }
+
+    // Email validation
+    let emailpattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if(!email.value.match(emailpattern)){
+        document.getElementById("emailError").innerText = "Enter a valid email address";
+    } else {
+        document.getElementById("emailError").innerText = "";
+    }
+
+    // Department validation
+    if(dept.value === ""){
+        document.getElementById("deptError").innerText = "Please select a department";
+    } else {
+        document.getElementById("deptError").innerText = "";
+    }
+
+    // Appointment date validation
+    let today = new Date();
+    today.setHours(0,0,0,0);
+    let inputDate = new Date(document.getElementById("dt").value);
+    inputDate.setHours(0,0,0,0);
+
+    if(inputDate <= today){
+        document.getElementById("dtError").innerText = "Appointment date must be in the future.";
+    } else {
+        document.getElementById("dtError").innerText = "";
+    }
+
+    if(document.querySelector('input[name=slot]:checked')===null){
+        document.getElementById("SlotError").innerText = "Please select an appointment slot";
+    } else {
+        document.getElementById("SlotError").innerText = "";
+    }
+});
+
+
+
+            </script>
+
+
+
+        </form>
+    </body>
+</html>
