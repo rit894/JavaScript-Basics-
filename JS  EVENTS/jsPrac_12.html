@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        .form{
+            margin: 40px auto;
+            padding: 20px;
+            box-shadow: 4px 10px 10px black;
+            max-width: 500px;
+            border-radius: 25px;
+            background-color: whitesmoke;
+            font-family: Arial, sans-serif;
+        }
+        input, textarea, select{
+            padding: 5px;
+            width: 100%;
+            border-radius: 5px;
+            margin-bottom: 5px;
+        }
+        label{
+            font-weight: bold;
+        }
+        .error{
+            color: red;
+            font-size: 12px;
+            margin-bottom: 8px;
+        }
+        button{
+            padding: 8px 16px;
+            margin-right: 10px;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover{
+            background-color: #ddd;
+        }
+        #coursePreview{
+            margin-top: 8px;
+            font-style: italic;
+        }
+        #confirmation{
+            display: none;
+            margin: 40px auto;
+            max-width: 500px;
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 4px 10px 10px black;
+            background-color: #e8ffe8;
+            font-family: Arial, sans-serif;
+            font-size: 18px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<form class="form" id="regForm">
+    <label for="name">Student Name</label><br>
+    <input type="text" id="name" placeholder="Enter full name">
+    <div id="nameError" class="error"></div>
+
+    <label for="roll">Roll Number</label><br>
+    <input type="text" id="roll" placeholder="e.g., 22CS001">
+    <div id="rollError" class="error"></div>
+
+    <label for="email">Email Address</label><br>
+    <input type="email" id="email" placeholder="Enter email">
+    <div id="emailError" class="error"></div>
+
+    <label for="phno">Phone Number</label><br>
+    <input type="tel" id="phno" placeholder="10-digit number">
+    <div id="phnoError" class="error"></div>
+
+    <label>Gender</label><br>
+    <input type="radio" name="gender" id="g1" value="Male"> Male
+    <input type="radio" name="gender" id="g2" value="Female"> Female
+    <input type="radio" name="gender" id="g3" value="Other"> Other<br>
+    <div id="genderError" class="error"></div>
+
+    <label for="course">Course</label><br>
+    <select id="course">
+        <option value="">-- Select Course --</option>
+        <option value="python">Python Programming</option>
+        <option value="web">Web Development</option>
+        <option value="data">Data Science</option>
+        <option value="ml">Machine Learning</option>
+    </select>
+    <div id="coursePreview"></div>
+
+    <label>Preferred Slot</label><br>
+    <input type="checkbox" id="s1" name="slot" value="Morning"> Morning
+    <input type="checkbox" id="s2" name="slot" value="Afternoon"> Afternoon
+    <input type="checkbox" id="s3" name="slot" value="Evening"> Evening<br>
+    <div id="slotError" class="error"></div>
+
+    <label for="comments">Additional Comments</label><br>
+    <textarea id="comments" maxlength="200"></textarea>
+    <div id="count">0 / 200 characters used</div>
+
+    <br>
+    <button id="submitBtn" type="submit">Submit</button>
+    <button id="resetBtn" type="button">Reset</button>
+</form>
+
+<div id="confirmation"></div>
+
+<script>
+    const form = document.getElementById("regForm");
+    const nameInput = document.getElementById("name");
+    const rollInput = document.getElementById("roll");
+    const emailInput = document.getElementById("email");
+    const phnoInput = document.getElementById("phno");
+    const comments = document.getElementById("comments");
+    const courseSelect = document.getElementById("course");
+    const confirmation = document.getElementById("confirmation");
+
+    const nameError = document.getElementById("nameError");
+    const rollError = document.getElementById("rollError");
+    const emailError = document.getElementById("emailError");
+    const phnoError = document.getElementById("phnoError");
+    const genderError = document.getElementById("genderError");
+    const slotError = document.getElementById("slotError");
+    const count = document.getElementById("count");
+    const coursePreview = document.getElementById("coursePreview");
+
+    // Character counter
+    comments.addEventListener("input", function () {
+        count.innerText = comments.value.length + " / 200 characters used";
+    });
+
+    // Course preview
+    courseSelect.addEventListener("change", function () {
+        const val = courseSelect.value;
+        if (val === "python") {
+            coursePreview.innerText = "Learn Python basics, loops, functions, and file handling.";
+        } else if (val === "web") {
+            coursePreview.innerText = "Covers HTML, CSS, JavaScript, and responsive web design.";
+        } else if (val === "data") {
+            coursePreview.innerText = "Includes statistics, NumPy, Pandas, and data visualization.";
+        } else if (val === "ml") {
+            coursePreview.innerText = "Introduction to ML algorithms, model training, and evaluation.";
+        } else {
+            coursePreview.innerText = "";
+        }
+    });
+
+    function clearErrors() {
+        nameError.innerText = "";
+        rollError.innerText = "";
+        emailError.innerText = "";
+        phnoError.innerText = "";
+        genderError.innerText = "";
+        slotError.innerText = "";
+    }
+
+    form.addEventListener("submit", function (e) {
+        e.preventDefault();
+        clearErrors();
+        let valid = true;
+
+        // Name: only alphabets and spaces, min 3
+        const namePattern = /^[A-Za-z ]{3,}$/;
+        if (!namePattern.test(nameInput.value.trim())) {
+            nameError.innerText = "Name must be at least 3 characters and contain only letters and spaces.";
+            valid = false;
+        }
+
+        // Roll: 2 digits + 2 uppercase letters + 3 digits (e.g., 22CS001)
+        const rollPattern = /^\d{2}[A-Z]{2}\d{3}$/;
+        if (!rollPattern.test(rollInput.value.trim())) {
+            rollError.innerText = "Roll must be like 22CS001 (2 digits, 2 uppercase letters, 3 digits).";
+            valid = false;
+        }
+
+        // Email
+        if (!emailInput.checkValidity()) {
+            emailError.innerText = "Please enter a valid email address.";
+            valid = false;
+        }
+
+        // Phone: exactly 10 digits, not starting with 0
+        const phonePattern = /^[1-9]\d{9}$/;
+        if (!phonePattern.test(phnoInput.value.trim())) {
+            phnoError.innerText = "Phone must be 10 digits and not start with 0.";
+            valid = false;
+        }
+
+        // Gender
+        if (!document.querySelector('input[name="gender"]:checked')) {
+            genderError.innerText = "Please select a gender.";
+            valid = false;
+        }
+
+        // Slot
+        if (!document.querySelector('input[name="slot"]:checked')) {
+            slotError.innerText = "Please select at least one preferred slot.";
+            valid = false;
+        }
+
+        if (valid) {
+            const selectedCourseText = courseSelect.options[courseSelect.selectedIndex].text || "a course";
+            confirmation.innerText = nameInput.value + ", you have successfully registered for " + selectedCourseText + "!";
+            confirmation.style.display = "block";
+            form.style.display = "none";
+        }
+    });
+
+    // Reset behavior
+    document.getElementById("resetBtn").addEventListener("click", function () {
+        form.reset();
+        clearErrors();
+        coursePreview.innerText = "";
+        count.innerText = "0 / 200 characters used";
+        confirmation.style.display = "none";
+        form.style.display = "block";
+    });
+</script>
+
+</body>
+</html>

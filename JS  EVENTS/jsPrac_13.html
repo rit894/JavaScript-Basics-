@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        .form {
+            background-color: whitesmoke;
+            padding: 25px;
+            margin: 0 40px;
+            box-shadow: 4px 10px 10px black;
+            max-width: 75%;
+            border-radius: 25px;
+        }
+        .error {
+            color: red;
+            font-size: 12px;
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+<body>
+    <form class="form">
+        Full Name: <input type="text" id="name">
+        <div id="nameError" class="error"></div>
+        <br>
+
+        EMail Address : <input type="text" id="Email">
+        <div id="emailError" class="error"></div>
+        <br>
+
+        Phone Number : <input type="text" id="phno">
+        <div id="phnoError" class="error"></div>
+        <br>
+
+        <input type="date" id="dob"><br>
+        <div id="dobError" class="error"></div>
+
+        Choose Your Gender : <br>
+        <input type="radio" name="r1" value="Male">Male
+        <input type="radio" name="r1" value="Female">Female
+        <input type="radio" name="r1" value="Prefer Not to say">Prefer Not to say
+        <div id="genderError" class="error"></div>
+        
+        Position you applied for: 
+        <select id="position">
+            <!-- ❌ You wrote vlaue instead of value -->
+            <option value="Frontend">Front End Developer</option>
+            <option value="Backend">Back End Developer</option>
+            <option value="Fullstack">Full Stack Developer</option>
+        </select>
+        <div id="positionError" class="error"></div>
+        <br>
+
+        Experience : <input type="text" id="exp">
+        <div id="expError" class="error"></div>
+        <br>
+
+        <input type="checkbox" name="skills" value="HTML"> Html and css
+        <input type="checkbox" name="skills" value="JS"> JavaScript
+        <input type="checkbox" name="skills" value="React"> React
+        <input type="checkbox" name="skills" value="Node"> Node js
+        <div id="skillsError" class="error"></div>
+
+        <p id="preview"></p>
+        <br>
+
+        <!-- ❌ You used <input type="textarea"> (invalid). -->
+        <!-- ✅ Correct is <textarea> -->
+        <textarea id="comment"></textarea>
+        <p id="demo"></p>
+        <br>
+
+        <button id="submit" type="button">Submit</button>
+        <button type="reset">Reset</button>
+
+        <script>
+            let mybtn = document.getElementById("submit");
+            mybtn.addEventListener("click", function() {
+                let name = document.getElementById("name");
+                let email = document.getElementById("Email");
+                let phno = document.getElementById("phno");
+                let dob = document.getElementById("dob");
+                let position = document.getElementById("position");
+                let exp = document.getElementById("exp");
+                let skills = document.getElementsByName("skills");
+
+                // ✅ Name validation
+                if (name.value === "" || name.value.length < 3) {
+                    document.getElementById("nameError").innerHTML = "Please enter a valid name (at least 3 characters).";
+                } else {
+                    document.getElementById("nameError").innerHTML = "";
+                }
+
+                // ❌ You wrote letemailPattern (typo)
+                // ✅ Correct declaration
+                let emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+                if (!email.value.match(emailPattern)) {
+                    document.getElementById("emailError").innerHTML = "Please enter a valid email address.";
+                } else {
+                    document.getElementById("emailError").innerHTML = "";
+                }
+
+                // ❌ You wrote if(!phno.value.length ===10) (wrong logic)
+                // ✅ Correct check
+                if (phno.value.length !== 10 || phno.value[0] === "0") {
+                    document.getElementById("phnoError").innerHTML = "Please enter a valid phone number (10 digits, not starting with 0).";
+                } else {
+                    document.getElementById("phnoError").innerHTML = "";
+                }
+
+                // ✅ Age validation
+                let today = new Date();
+                let age = today.getFullYear() - new Date(dob.value).getFullYear();
+                if (age < 18) {
+                    document.getElementById("dobError").innerHTML = "You must be at least 18 years old to apply.";
+                } else {
+                    document.getElementById("dobError").innerHTML = "";
+                }
+
+                // ✅ Position validation
+                if (position.value === "") {
+                    document.getElementById("positionError").innerHTML = "Please select a position.";
+                } else {
+                    document.getElementById("positionError").innerHTML = "";
+                }
+
+                // ✅ Experience validation
+                if (exp.value === "" || isNaN(exp.value) || exp.value < 0) {
+                    document.getElementById("expError").innerHTML = "Please enter a valid experience (non-negative number).";
+                } else {
+                    document.getElementById("expError").innerHTML = "";
+                }
+
+                // ❌ You checked skills.length (always 4)
+                // ✅ Count checked boxes
+                let selectedSkills = 0;
+                for (let i = 0; i < skills.length; i++) {
+                    if (skills[i].checked) selectedSkills++;
+                }
+                if (selectedSkills < 2) {
+                    document.getElementById("skillsError").innerHTML = "Please select at least two skills.";
+                } else {
+                    document.getElementById("skillsError").innerHTML = "";
+                }
+            });
+
+            let comment = document.getElementById("comment");
+            comment.addEventListener("input", function() {
+                if (comment.value.length > 260 && comment.value.length < 300) {
+                    document.getElementById("demo").style.color = "red";
+                    document.getElementById("demo").innerHTML = "You have entered " + comment.value.length + " characters. You can enter " + (300 - comment.value.length) + " more characters.";
+                } else if (comment.value.length >= 300) {
+                    document.getElementById("demo").style.color = "red";
+                    document.getElementById("demo").innerHTML = "You have reached the maximum character limit of 300.";
+                } else {
+                    document.getElementById("demo").innerHTML = "";
+                }
+            });
+
+            // ❌ You placed this inside comment listener (caused blinking)
+            // ✅ Move outside
+            let position = document.getElementById("position");
+            let preview = document.getElementById("preview");
+            position.addEventListener("change", function() {
+                preview.innerHTML = "You have selected " + position.value + " position.";
+            });
+        </script>
+    </form>
+</body>
+</html>
