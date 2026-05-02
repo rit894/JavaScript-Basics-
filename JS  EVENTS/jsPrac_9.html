@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+    <head></head>
+    <body>
+        Name:<input type="text" id="name">
+        Email : <input type="text" id="email">
+        Password : <input type="text" id="pass">
+        <p id="checkpass"></p>
+        show password : <input type="checkbox" id="showpass">
+        <button id="submit">Submit</button>
+        <script>
+            let submit = document.getElementById("submit");
+            let name= document.getElementById("name");
+            let email= document.getElementById("email");
+            let pass= document.getElementById("pass");
+            submit.addEventListener("click", function(){
+                if(name.value.trim().length <= 3){
+                    alert("Name must be more than 3 characters");
+                } else if(!email.value.match(emailFormat)){
+                    alert("Invalid email format");
+                } else if(pass.value.length < 6){
+                    alert("Password is weak");
+                } else {
+                    alert("Form submitted successfully!");
+                }
+            });
+            name.addEventListener("keyup",function(){
+                if(name.value.trim().length <= 3){
+                    alert("Name must be more than 3 characters");
+                };
+            });
+            let emailFormat = /^[a-zA-Z0-9._]+@[a-zA-Z0-9]+\.[a-zA-Z]{2,4}$/;
+
+            email.addEventListener("blur",function(){
+                if(!email.value.match(emailFormat)){
+                    alert("Invalid email format");
+                }
+            });
+            pass.addEventListener("input",function(){
+                if(pass.value.length < 6){
+                    document.getElementById("checkpass").innerHTML = "Password is weak";
+                    document.getElementById("checkpass").style.color = "red";
+                } else if(pass.value.length < 10){
+                    document.getElementById("checkpass").innerHTML = "Password is medium";
+                    document.getElementById("checkpass").style.color = "orange";
+                } else {
+                    document.getElementById("checkpass").innerHTML = "Password is strong";
+                    document.getElementById("checkpass").style.color = "green";
+                }
+            });
+            let showpass = document.getElementById("showpass");
+            showpass.addEventListener("click", function(){
+                if(showpass.checked){
+                    pass.type = "text";
+                } else {
+                    pass.type = "password";
+                }
+            });
+        </script>
+
+    </body>
+</html>

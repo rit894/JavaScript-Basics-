@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Login Page</title>
+        <style>
+            /* Simple styling for clarity */
+            #demo, #strengthMsg, #finalMsg { font-family: sans-serif; margin-top: 5px; }
+            .error { color: red; }
+            .success { color: green; font-weight: bold; }
+        </style>
+    </head>
+    <body>
+        
+        <input type="text" id="feild1" placeholder="Username" >
+        <p id="demo" class="error"></p>
+
+        <input type="password" id="passInput" placeholder="Enter password">
+        <p id="strengthMsg">Strength: <span id="strengthLevel">None</span></p>
+
+        <button id="loginBtn">Login</button>
+        <p id="finalMsg"></p>
+
+        <script>
+            // --- 1. Username Logic ---
+            let tFeld1 = document.getElementById("feild1");
+            
+            tFeld1.addEventListener("focus", function() {
+                tFeld1.style.backgroundColor = "yellow";
+            });
+
+            // Changed to 'blur' (when user leaves field) for better UX
+            tFeld1.addEventListener("blur", function() {
+                tFeld1.style.backgroundColor = "white"; // Reset color
+                if (tFeld1.value.trim() === "") {
+                    document.getElementById("demo").innerHTML = "Username required";
+                } else {
+                    document.getElementById("demo").innerHTML = "";
+                }
+            });
+
+            // --- 2. Password Strength Logic ---
+            const passwordInput = document.getElementById("passInput");
+            const strengthLevel = document.getElementById("strengthLevel");
+
+            passwordInput.addEventListener("input", function() {
+                let val = passwordInput.value;
+                let score = 0;
+
+                if (val.length > 6) score++;
+                if (val.length > 10) score++;
+                if (/[0-9]/.test(val)) score++;
+                if (/[!@#$%^&*]/.test(val)) score++;
+
+                if (val.length === 0) {
+                    strengthLevel.innerHTML = "None";
+                    strengthLevel.style.color = "black";
+                } else if (score < 2) {
+                    strengthLevel.innerHTML = "Weak 🔴";
+                    strengthLevel.style.color = "red";
+                } else if (score < 4) {
+                    strengthLevel.innerHTML = "Medium 🟠";
+                    strengthLevel.style.color = "orange";
+                } else {
+                    strengthLevel.innerHTML = "Strong 🟢";
+                    strengthLevel.style.color = "green";
+                }
+            });
+
+            // --- 3. Login Button Logic ---
+            const loginBtn = document.getElementById("loginBtn");
+            const finalMsg = document.getElementById("finalMsg");
+
+            loginBtn.addEventListener("click", function() {
+                // Check if any field is empty
+                if (tFeld1.value.trim() === "" || passwordInput.value.trim() === "") {
+                    finalMsg.innerHTML = "Error: All fields are required!";
+                    finalMsg.className = "error";
+                } else {
+                    finalMsg.innerHTML = "Login Successful!";
+                    finalMsg.className = "success";
+                }
+            });
+
+        </script>
+    </body>
+</html>

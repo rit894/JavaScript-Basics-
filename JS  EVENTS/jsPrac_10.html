@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+    <head></head>
+    <body>
+        <p id="demo"></p>
+        <button id="start" >Start</button>
+        <button id="stop">Stop</button>
+        <script>
+            let start = document.getElementById("start");
+            let stop = document.getElementById("stop");
+            let count = 0;
+            let interval;
+            start.addEventListener("click",function(){
+                interval= setInterval(showTime,1000);
+             
+            
+
+            });
+            function showTime(){
+                count++;
+                document.getElementById("demo").innerHTML = "Time: " + count + " seconds";
+                    if(count ===10){
+                    clearInterval(interval);
+                    alert("Time's up!");
+            }}
+            stop.addEventListener("click",function(){
+                clearInterval(interval);
+            });
+            
+        </script>
+    </body>
+</html>

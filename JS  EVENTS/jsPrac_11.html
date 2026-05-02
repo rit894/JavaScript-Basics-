@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        #addressFields {
+            display: none; /* hidden by default */
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Checkbox -->
+    <label>
+        <input type="checkbox" id="addAddress">
+        Add Address
+    </label>
+
+    <br><br>
+
+    <!-- Address Fields -->
+    <div id="addressFields">
+        <input type="text" placeholder="Street"><br><br>
+        <input type="text" placeholder="City"><br><br>
+        <input type="text" placeholder="Pincode"><br><br>
+    </div>
+
+    <script>
+        let checkbox = document.getElementById("addAddress");
+        let addressDiv = document.getElementById("addressFields");
+
+        // On change → show or hide address fields
+        checkbox.addEventListener("change", function () {
+            if (checkbox.checked) {
+                addressDiv.style.display = "block";   // show
+            } else {
+                addressDiv.style.display = "none";    // hide
+            }
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+    <head></head>
+    <body>
+
+        <img src="https://tse3.mm.bing.net/th/id/OIP.MInViflWTn0CIsOU3esbLwHaE5?r=0&cb=thfvnext&rs=1&pid=ImgDetMain&o=7&rm=3" 
+             id="Image" 
+             alt="Sample Image">
+
+        <p id="TThing">Milk</p>
+        <p id="cost1">20</p>
+        <button id="AddToCart">Add to Cart</button>
+
+        <p id="Thing">Milk</p>
+        <p id="cost2">210</p>
+        <button id="AddToCart1">Add to Cart</button>
+
+        <p id="TotalPrice">Total Price: 0</p>
+
+        <script>
+            // Image zoom
+            let img = document.getElementById("Image");
+            img.style.width = "150px";
+            img.style.height = "150px";
+
+            img.addEventListener("mouseover", function () {
+                img.style.width = "200px";
+                img.style.height = "200px";
+            });
+
+            img.addEventListener("mouseout", function () {
+                img.style.width = "150px";
+                img.style.height = "150px";
+            });
+
+            // Cart logic
+            let Sum = 0;
+
+            document.getElementById("AddToCart").addEventListener("click", function () {
+                let item = document.getElementById("TThing").innerText;
+                let price = parseInt(document.getElementById("cost1").innerText);
+
+                Sum += price;
+                document.getElementById("TotalPrice").innerText = "Total Price: " + Sum;
+            });
+
+            document.getElementById("AddToCart1").addEventListener("click", function () {
+                let item = document.getElementById("Thing").innerText;
+                let price = parseInt(document.getElementById("cost2").innerText);
+
+                Sum += price;
+                document.getElementById("TotalPrice").innerText = "Total Price: " + Sum;
+            });
+        </script>
+    </body>
+</html>
